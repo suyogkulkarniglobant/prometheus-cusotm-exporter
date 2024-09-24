@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-exporter
+  labels:
+    app: prom-cust
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prom-cust
+  template:
+    metadata:
+      labels:
+        app: prom-cust
+    spec:
+      serviceAccountName: hpa-service-account
+      containers:
+      - name: customexporter
+        image: suyogkulkarni/prometheus-customexporter:0.3-latest
+        command: ["python3"]
+        args: ["custom_exporter.py","-f","/proc" ]
+        ports:
+        - containerPort: 9877
+

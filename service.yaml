@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: prom-cust
+  name: custom-exporter-service
+  annotations:
+    customexporter.prometheus/scrape: "true"
+    customexporter.prometheus/scheme: "http"
+    customexporter.prometheus/path: "/metrics"
+    customexporter.prometheus/port: "9877"
+spec:
+  selector:
+    app: prom-cust
+  ports:
+    - port: 9877
+      targetPort: 9877
